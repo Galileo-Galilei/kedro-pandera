@@ -137,3 +137,5 @@ mlruns/
 # Office data
 *.xlsx
 *.pptx
+
+debug/
