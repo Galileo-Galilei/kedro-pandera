@@ -7,7 +7,7 @@ HERE = pathlib.Path(__file__).parent
 
 
 def _parse_requirements(path, encoding="utf-8"):
-    with open(path, mode="r", encoding=encoding) as file_handler:
+    with open(path, encoding=encoding) as file_handler:
         requirements = [
             x.strip() for x in file_handler if x.strip() and not x.startswith("-r")
         ]
@@ -15,7 +15,7 @@ def _parse_requirements(path, encoding="utf-8"):
 
 
 # get the dependencies and installs
-base_requirements = _parse_requirements("requirements.txt")
+base_requirements = _parse_requirements((HERE / "requirements.txt").as_posix())
 
 
 # Get the long description from the README file
@@ -57,14 +57,27 @@ setup(
         ],
     },
     author="Yolan Honoré-Rougé",
-    entry_points={},
+    entry_points={
+        "kedro.project_commands": [
+            "kedro_pandera =  kedro_pandera.framework.cli.cli:commands"
+        ],
+        # "kedro.hooks": [
+        #     "pandera_hook = kedro_pandera.framework.hooks.pandera_hook:pandera_hook",
+        # ],
+    },
     zip_safe=False,
     keywords="",
     classifiers=[
         "Development Status :: 4 - Beta",
+        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
+        "Framework :: Kedro",
+        "Environment :: Plugins",
+        "Intended Audience :: Developers",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: MacOS",
+        "Operating System :: POSIX :: Linux",
     ],
 )
