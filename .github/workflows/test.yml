@@ -48,7 +48,7 @@ jobs:
       run: |
         pytest --cov=./ --cov-report=xml
     - name: Upload coverage report to Codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v3
       if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.8' # upload should occur only once in the loop
       with:
         token: ${{ secrets.CODECOV_TOKEN }}  # token is not mandatory but make access more stable

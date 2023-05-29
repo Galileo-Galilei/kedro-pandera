@@ -31,7 +31,7 @@ def pandera_commands():
     pass  # pragma: no cover
 
 
-@pandera_commands.command()
+@pandera_commands.command(name="infer")
 @click.option(
     "--dataset",
     "-d",

@@ -23,4 +23,4 @@ def test_mlflow_commands_inside_kedro_project(monkeypatch, kedro_project):
     # launch the command to initialize the project
     cli_runner = CliRunner()
     result = cli_runner.invoke(cli_pandera)
-    assert {"infer-schema"} == set(extract_cmd_from_help(result.output))
+    assert {"infer"} == set(extract_cmd_from_help(result.output))
