@@ -47,6 +47,7 @@ setup(
         ],
         "test": [
             "pytest>=7.0.0, <8.0.0",
+            "pytest-cov>=4.0.0, <5.0.0",
             "flake8==6.0.0",  # ensure consistency with pre-commit
             "black==23.3.0",  # pin black version because it is not compatible with a pip range (because of non semver version number)
             "isort==5.12.0",  # ensure consistency with pre-commit
