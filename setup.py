@@ -31,7 +31,7 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/Galileo-Galilei/kedro-pandera",
-    python_requires=">=3.7, <3.11",
+    python_requires=">=3.8, <3.11",
     packages=find_packages(exclude=["docs*", "tests*"]),
     setup_requires=["setuptools_scm"],
     include_package_data=True,
@@ -69,7 +69,6 @@ setup(
     keywords="",
     classifiers=[
         "Development Status :: 4 - Beta",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
