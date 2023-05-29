@@ -39,18 +39,30 @@ def pandera_commands():
     help="The name of the dataset whom schema will be inferred.",
 )
 @click.option(
+    "--python/--yaml",
+    "use_python_ext",
+    is_flag=True,
+    default=False,
+    help="Should the schema be written to a 'yaml' or a 'python' file? ",
+)
+@click.option(
     "--env",
     "-e",
     default="local",
     help="The kedro environment where the dataset to retrieve is available. Default to 'local'",
 )
 @click.option(
-    "--filename",
-    "-f",
+    "--outfile",
+    "-o",
     default=None,
     help="The name of the file where the schema will be stored. Its extension must be '.yml' or '.py'. Default to 'dataset_name.yml'. ",
 )
-def infer_schema(dataset_name: str, env: str = "local", filename: Optional[str] = None):
+def infer_schema(
+    dataset_name: str,
+    use_python_ext: bool = False,
+    env: str = "local",
+    outfile: Optional[str] = None,
+):
     """Infer the schema of a dataset and dump it in a catalog file
     so that it will enbale validation at runtime.
     """
@@ -66,10 +78,11 @@ def infer_schema(dataset_name: str, env: str = "local", filename: Optional[str] 
         data = catalog.load(dataset_name)
         data_schema = pa.infer_schema(data)
 
-        filename = filename or f"{dataset_name}.yml"
+        file_extension = "py" if use_python_ext else "yml"
+        filename = f"{dataset_name}.{file_extension}"
         # TODO: decide if we should store in env or base?
         filepath = (project_path / settings.CONF_SOURCE / env / filename).as_posix()
-        if filename.endswith(".py"):
+        if use_python_ext:
             data_schema.to_script(filepath)
         else:
             data_schema.to_yaml(filepath)
