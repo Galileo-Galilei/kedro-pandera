@@ -7,7 +7,7 @@ HERE = pathlib.Path(__file__).parent
 
 
 def _parse_requirements(path, encoding="utf-8"):
-    with open(path, mode="r", encoding=encoding) as file_handler:
+    with open(path, encoding=encoding) as file_handler:
         requirements = [
             x.strip() for x in file_handler if x.strip() and not x.startswith("-r")
         ]
@@ -15,7 +15,7 @@ def _parse_requirements(path, encoding="utf-8"):
 
 
 # get the dependencies and installs
-base_requirements = _parse_requirements("requirements.txt")
+base_requirements = _parse_requirements((HERE / "requirements.txt").as_posix())
 
 
 # Get the long description from the README file
@@ -25,13 +25,13 @@ with open((HERE / "README.md").as_posix(), encoding="utf-8") as file_handler:
 
 setup(
     name=NAME,
-    version="0.1.0",  # this will be bumped automatically by bump2version
+    version="0.0.1",  # this will be bumped automatically by bump2version
     description="A kedro plugin to use pandera in your kedro projects",
     license="Apache Software License (Apache 2.0)",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/Galileo-Galilei/kedro-pandera",
-    python_requires=">=3.7, <3.11",
+    python_requires=">=3.8, <3.11",
     packages=find_packages(exclude=["docs*", "tests*"]),
     setup_requires=["setuptools_scm"],
     include_package_data=True,
@@ -47,6 +47,7 @@ setup(
         ],
         "test": [
             "pytest>=7.0.0, <8.0.0",
+            "pytest-cov>=4.0.0, <5.0.0",
             "flake8==6.0.0",  # ensure consistency with pre-commit
             "black==23.3.0",  # pin black version because it is not compatible with a pip range (because of non semver version number)
             "isort==5.12.0",  # ensure consistency with pre-commit
@@ -57,7 +58,14 @@ setup(
         ],
     },
     author="Yolan Honoré-Rougé",
-    entry_points={},
+    entry_points={
+        "kedro.project_commands": [
+            "kedro_pandera =  kedro_pandera.framework.cli.cli:commands"
+        ],
+        # "kedro.hooks": [
+        #     "pandera_hook = kedro_pandera.framework.hooks.pandera_hook:pandera_hook",
+        # ],
+    },
     zip_safe=False,
     keywords="",
     classifiers=[
@@ -65,6 +73,11 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
+        "Framework :: Kedro",
+        "Environment :: Plugins",
+        "Intended Audience :: Developers",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: MacOS",
+        "Operating System :: POSIX :: Linux",
     ],
 )
