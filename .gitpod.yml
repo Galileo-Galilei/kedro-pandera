@@ -1,0 +1,5 @@
+image: gitpod/workspace-python-3.10
+tasks:
+  - init: python -m pip install -e . -r test_requirements.txt
+
+
