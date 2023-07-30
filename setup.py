@@ -62,9 +62,9 @@ setup(
         "kedro.project_commands": [
             "kedro_pandera =  kedro_pandera.framework.cli.cli:commands"
         ],
-        # "kedro.hooks": [
-        #     "pandera_hook = kedro_pandera.framework.hooks.pandera_hook:pandera_hook",
-        # ],
+        "kedro.hooks": [
+            "pandera_hook = kedro_pandera.framework.hooks.pandera_hook:pandera_hook",
+        ],
     },
     zip_safe=False,
     keywords="",
