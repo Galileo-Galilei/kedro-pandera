@@ -86,6 +86,7 @@ def infer_schema(
             data_schema.to_script(filepath)
         else:
             data_schema.to_yaml(filepath)
+        click.secho(f"The schema is written to {filepath}", fg="green")
 
         # TODO: should we add a metadata key to the catalog file?
         # I hate the idea of modifying a config flag on the fly,
