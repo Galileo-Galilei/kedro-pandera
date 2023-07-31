@@ -43,13 +43,13 @@ setup(
             "sphinx-markdown-tables~=0.0.15",
             "sphinx-click>=3.1,<4.5",
             "sphinx_copybutton~=0.5.0",
-            "myst-parser>=0.17.2,<1.1.0",
+            "myst-parser>=0.17.2,<2.1.0",
         ],
         "test": [
             "pytest>=7.0.0, <8.0.0",
             "pytest-cov>=4.0.0, <5.0.0",
             "flake8==6.0.0",  # ensure consistency with pre-commit
-            "black==23.3.0",  # pin black version because it is not compatible with a pip range (because of non semver version number)
+            "black==23.7.0",  # pin black version because it is not compatible with a pip range (because of non semver version number)
             "isort==5.12.0",  # ensure consistency with pre-commit
         ],
         "dev": [
