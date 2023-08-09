@@ -2,7 +2,7 @@ lint:
 	pre-commit run -a --hook-stage manual $(hook)
 
 test:
-	pytest 
+	pytest
 
 install:
 	pip install -e .
