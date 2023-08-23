@@ -38,7 +38,7 @@ pip install --upgrade git+https://github.com/Galileo-Galilei/kedro-pandera.git
 
 The documentation contains:
 
-- [A  "hello world" example]()
+- [A  "hello world" example](https://kedro-pandera.readthedocs.io/en/stable/source/01_tutorials/01_getting_started.html)
 
 # Release and roadmap
 
