@@ -9,7 +9,7 @@ Welcome to kedro-pandera's documentation!
 .. toctree::
    :maxdepth: 4
 
-   Tutorial <source/01_introduction/01_tutorial.md>
+   Tutorial <source/01_tutorials/01_getting_started.md>
 
 
 Indices and tables
