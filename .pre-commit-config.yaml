@@ -31,6 +31,7 @@ repos:
           - id: check-merge-conflict
           - id: check-toml
           - id: check-yaml
+            exclude: "tests/_data"
           - id: debug-statements
           - id: end-of-file-fixer
           - id: mixed-line-ending
