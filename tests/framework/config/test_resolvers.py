@@ -1,17 +1,18 @@
+import importlib
+import sys
 from contextlib import contextmanager
-import pandera as pa
+
 import pytest
 import yaml
 from omegaconf import OmegaConf
-from pandera import DataFrameModel, DataFrameSchema
+from pandera import DataFrameSchema
 from pandera.errors import SchemaDefinitionError
-from pandera.typing import Series
+
 from kedro_pandera.framework.config.resolvers import (
+    resolve_dataframe_model,
     resolve_interpolated_yaml_schema,
     resolve_yaml_schema,
-    resolve_dataframe_model,
 )
-import sys
 
 
 @contextmanager
@@ -124,21 +125,15 @@ def test_resolve_interpolated_yaml_schema():
 
 
 @pytest.fixture
-def dummy_module(mocker):
+def mock_dataframe_model(mocker):
     sys.modules["dummy"] = mocker.Mock()  # This is the easiest way to mock a module
     sys.modules["dummy.schema"] = mocker.Mock()
-    yield
+    sys.modules["dummy.schema"].dataframe_model = mocker.Mock()
+    yield sys.modules["dummy.schema"].dataframe_model
     del sys.modules["dummy"]
     del sys.modules["dummy.schema"]
 
 
-def test_resolve_dataframe_model(mocker, monkeypatch, dummy_module):
-    # assert True
-    import dummy.schema
-
-    fake_model = mocker.Mock()
-    monkeypatch.setattr(dummy.schema, "dataframe_model", fake_model)
-    fake_model = mocker.Mock()
-    mock_model = "dummy.schema.dataframe_model"
-    model = resolve_dataframe_model(mock_model)
-    assert model == fake_model
+def test_resolve_dataframe_model(mock_dataframe_model):
+    model = resolve_dataframe_model("dummy.schema.dataframe_model")
+    assert model == mock_dataframe_model
