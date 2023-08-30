@@ -47,7 +47,7 @@ extensions = [
     "sphinx_copybutton",
     "sphinx_markdown_tables",
     "myst_parser",
-    "sphinxawesome_theme.docsearch"
+    "sphinxawesome_theme.docsearch",
 ]
 
 # enable autosummary plugin (table of contents for modules/classes/class
