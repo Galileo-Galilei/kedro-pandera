@@ -7,9 +7,9 @@ An example of schema look like:
 import pandera as pa
 from pandera.typing import Series
 
+
 class ExampleIrisDataSchema(pa.DataFrameModel):
     sepal_length: Series[float] = pa.Field(gt=2000)
-
 ```
 
 You should put this in `src/<kedro_pandera_tutorial/schema/example_iris_data.py` and create a `src/kedro_pandera_tutorial/schema/example_iris_data/__init__.py` file.

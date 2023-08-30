@@ -2,16 +2,6 @@ default_stages: [commit, manual]
 
 exclude: ^kedro_mlflow/template/project/run.py
 repos:
-    - repo: https://github.com/psf/black
-      rev: 23.7.0
-      hooks:
-          - id: black
-            language_version: python3.10
-    - repo: https://github.com/asottile/blacken-docs
-      rev: v1.12.1
-      hooks:
-        - id: blacken-docs
-          additional_dependencies: [black==23.7.0]
     - repo: https://github.com/astral-sh/ruff-pre-commit
       # Ruff version.
       rev: v0.0.277
@@ -23,6 +13,16 @@ repos:
           args: ["--fix", "--show-fixes", "--exit-non-zero-on-fix", "--ignore=PLR2004,PLR0913"]
           # include: "tests"
           exclude: "^kedro/templates/|^features/steps/test_starter/|kedro"
+    - repo: https://github.com/psf/black
+      rev: 23.7.0
+      hooks:
+          - id: black
+            language_version: python3.10
+    - repo: https://github.com/asottile/blacken-docs
+      rev: v1.12.1
+      hooks:
+        - id: blacken-docs
+          additional_dependencies: [black==23.7.0]
     - repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v4.4.0
       hooks:
