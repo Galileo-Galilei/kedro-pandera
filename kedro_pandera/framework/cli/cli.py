@@ -3,10 +3,12 @@ from typing import Optional
 
 import click
 import frictionless  # noqa: F401
-import pandera as pa
+import yaml
 from kedro.framework.project import settings
 from kedro.framework.session import KedroSession
 from kedro.framework.startup import bootstrap_project
+from pandera import infer_schema
+from pandera.io import serialize_schema
 
 # if we do not import ``frictionless`` manually here, we get
 # >  ImportError: ('# ERROR: failed to register fsspec file#systems', TypeError("argument of type '_Cached' is not iterable"))
@@ -48,7 +50,7 @@ def pandera_commands():
 @click.option(
     "--env",
     "-e",
-    default="local",
+    default="base",
     help="The kedro environment where the dataset to retrieve is available. Default to 'local'",
 )
 @click.option(
@@ -57,14 +59,14 @@ def pandera_commands():
     default=None,
     help="The name of the file where the schema will be stored. Its extension must be '.yml' or '.py'. Default to 'dataset_name.yml'. ",
 )
-def infer_schema(
+def infer_dataset_schema(
     dataset_name: str,
     use_python_ext: bool = False,
-    env: str = "local",
+    env: str = "base",
     outfile: Optional[str] = None,
 ):
     """Infer the schema of a dataset and dump it in a catalog file
-    so that it will enbale validation at runtime.
+    so that it will enable validation at runtime.
     """
 
     project_path = Path().cwd()
@@ -76,16 +78,25 @@ def infer_schema(
         context = session.load_context()
         catalog = context.catalog
         data = catalog.load(dataset_name)
-        data_schema = pa.infer_schema(data)
-
+        data_schema = infer_schema(data)
         file_extension = "py" if use_python_ext else "yml"
-        filename = f"{dataset_name}.{file_extension}"
+        filename = f"catalog_{dataset_name}.{file_extension}"
         # TODO: decide if we should store in env or base?
         filepath = (project_path / settings.CONF_SOURCE / env / filename).as_posix()
         if use_python_ext:
             data_schema.to_script(filepath)
         else:
-            data_schema.to_yaml(filepath)
+            statistics = serialize_schema(data_schema)
+            with open(filepath, "w", encoding="utf-8") as fhandler:
+                statistics = serialize_schema(data_schema)
+                yaml.safe_dump(
+                    {f"_{dataset_name}_schema": statistics},
+                    stream=fhandler,
+                    sort_keys=False,
+                )
+                # data_schema.to_yaml(filepath)
+
+        click.secho(f"The schema is written to {filepath}", fg="green")
 
         # TODO: should we add a metadata key to the catalog file?
         # I hate the idea of modifying a config flag on the fly,

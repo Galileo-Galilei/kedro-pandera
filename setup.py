@@ -31,7 +31,7 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/Galileo-Galilei/kedro-pandera",
-    python_requires=">=3.8, <3.11",
+    python_requires=">=3.8, <3.12",
     packages=find_packages(exclude=["docs*", "tests*"]),
     setup_requires=["setuptools_scm"],
     include_package_data=True,
@@ -43,14 +43,13 @@ setup(
             "sphinx-markdown-tables~=0.0.15",
             "sphinx-click>=3.1,<4.5",
             "sphinx_copybutton~=0.5.0",
-            "myst-parser>=0.17.2,<1.1.0",
+            "myst-parser>=0.17.2,<2.1.0",
         ],
         "test": [
             "pytest>=7.0.0, <8.0.0",
             "pytest-cov>=4.0.0, <5.0.0",
-            "flake8==6.0.0",  # ensure consistency with pre-commit
-            "black==23.3.0",  # pin black version because it is not compatible with a pip range (because of non semver version number)
-            "isort==5.12.0",  # ensure consistency with pre-commit
+            "black>=23.0.0, <24.0.0",  # black guarantees stability on a calendar year basis
+            "ruff",  # no version since its evolving rapidly
         ],
         "dev": [
             "pre-commit>=2.0.0,<4.0.0",
@@ -62,9 +61,9 @@ setup(
         "kedro.project_commands": [
             "kedro_pandera =  kedro_pandera.framework.cli.cli:commands"
         ],
-        # "kedro.hooks": [
-        #     "pandera_hook = kedro_pandera.framework.hooks.pandera_hook:pandera_hook",
-        # ],
+        "kedro.hooks": [
+            "pandera_hook = kedro_pandera.framework.hooks.pandera_hook:pandera_hook",
+        ],
     },
     zip_safe=False,
     keywords="",
@@ -73,6 +72,7 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Framework :: Kedro",
         "Environment :: Plugins",
         "Intended Audience :: Developers",
