@@ -1,4 +1,3 @@
-import importlib
 import sys
 from contextlib import contextmanager
 
