@@ -1,1 +1,4 @@
 cookiecutter
+pytest-mock
+pytest-cov
+pytest
