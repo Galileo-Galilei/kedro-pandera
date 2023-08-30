@@ -37,7 +37,6 @@ assignees: ''
 ## Your Environment
 <!-- Include as many relevant details about the environment in which you experienced the bug: -->
 * `kedro-pandera` version used (`pip show kedro-pandera`):
-*
 * Python version used (`python -V`):
 * Operating system and version:
 
