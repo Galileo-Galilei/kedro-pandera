@@ -1,4 +1,7 @@
-# Validate with DataFrameModel
+# DataFrameModel
+`pandera` offer a class-based [DataFrameModel schema](https://pandera.readthedocs.io/en/stable/dataframe_models.html) for data validation.
+
+## Validate with DataFrameModel
 
 Alternatively, `pandera` support a class-based `DataFrameModel` schema.
 
