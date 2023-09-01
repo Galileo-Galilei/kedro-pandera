@@ -43,6 +43,8 @@ setup(
             "sphinx-markdown-tables~=0.0.15",
             "sphinx-click>=3.1,<4.5",
             "sphinx_copybutton~=0.5.0",
+            # "sphinx-sitemap",
+            "sphinx-design",
             "myst-parser>=0.17.2,<2.1.0",
         ],
         "test": [

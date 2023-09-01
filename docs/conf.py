@@ -32,23 +32,29 @@ release = kp_version
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "sphinx_click",
+    "sphinx_sitemap",
+    "sphinx_design",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
-    "sphinx_click",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.extlinks",
+    "sphinx.ext.viewcode",
     # "sphinx_autodoc_typehints",
     # "sphinx.ext.doctest",
     # "sphinx.ext.todo",
     # "sphinx.ext.coverage",
     # "sphinx.ext.mathjax",
     # "sphinx.ext.ifconfig",
-    # "sphinx.ext.viewcode",
+    # "sphinx_sitemap",
+    "sphinx_design",
     # "nbsphinx",
     "sphinx_copybutton",
     "sphinx_markdown_tables",
     "myst_parser",
     "sphinxawesome_theme.docsearch",
-    # "sphinxawesome.highlighting",
+    "sphinxawesome_theme.highlighting",
 ]
 
 # enable autosummary plugin (table of contents for modules/classes/class
