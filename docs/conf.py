@@ -33,7 +33,6 @@ release = kp_version
 # ones.
 extensions = [
     "sphinx_click",
-    "sphinx_sitemap",
     "sphinx_design",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
@@ -48,7 +47,6 @@ extensions = [
     # "sphinx.ext.mathjax",
     # "sphinx.ext.ifconfig",
     # "sphinx_sitemap",
-    "sphinx_design",
     # "nbsphinx",
     "sphinx_copybutton",
     "sphinx_markdown_tables",
