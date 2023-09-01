@@ -51,6 +51,7 @@ extensions = [
     "sphinx_copybutton",
     "sphinx_markdown_tables",
     "myst_parser",
+    "sphinxawesome_theme",
     "sphinxawesome_theme.docsearch",
     "sphinxawesome_theme.highlighting",
 ]
