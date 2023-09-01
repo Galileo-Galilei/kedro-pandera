@@ -81,7 +81,11 @@ The schema is written to /path/to/project/pandas-iris/conf/base/catalog_example_
 This will create a file ``/path/to/project/pandas-iris/conf/base/catalog_example_iris_data.yml`` with the default configuration.
 
 ```{warning}
-This CLI is a helper to avoid you to write the schema manually which is tediousbut the documentation clearly states that "_these inferred schemas are **rough drafts** that shouldn’t be used for validation without modification_" (https://pandera.readthedocs.io/en/stable/schema_inference.html)
+This CLI is a helper to avoid you to write the schema manually which is tedious but the documentation clearly states that "_these inferred schemas are **rough drafts** that shouldn’t be used for validation without modification_" (https://pandera.readthedocs.io/en/stable/schema_inference.html)
+```
+
+```{note}
+If you prefer to use the `pandera` class-based [DataFrameModel schema](https://pandera.readthedocs.io/en/stable/dataframe_models.html), you can refer to [Validate with DataFrameModel](./02_dataframe_model.md) to create the schema and update the data catalog.
 ```
 
 ### Step 2: Update the catalog
@@ -253,4 +257,4 @@ _example_iris_data_schema:
 
 If we run the pipeline again with ``kedro run``, we will see the same successful log we saw in step 3!
 
-Congratulations, your pipeline is now protected against invalid values passed to the "species" column!  
+Congratulations, your pipeline is now protected against invalid values passed to the "species" column!
