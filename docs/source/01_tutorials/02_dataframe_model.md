@@ -12,9 +12,9 @@ class ExampleIrisDataSchema(pa.DataFrameModel):
     sepal_length: Series[float] = pa.Field(gt=2000)
 ```
 
-You should put this in `src/<kedro_pandera_tutorial/schema/example_iris_data.py` and create a `src/kedro_pandera_tutorial/schema/example_iris_data/__init__.py` file.
+We suggest to put this in `src/kedro_pandera_tutorial/schemas/example_iris_data.py` and create a `src/kedro_pandera_tutorial/schemas/__init__.py` file.
 
-the `__init__.py` need to import the class.
+The `__init__.py` need to import the class.
 
 ```python
 from .example_iris_data import ExampleIrisDataSchema
