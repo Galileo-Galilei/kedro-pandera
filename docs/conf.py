@@ -48,6 +48,7 @@ extensions = [
     "sphinx_markdown_tables",
     "myst_parser",
     "sphinxawesome_theme.docsearch",
+    # "sphinxawesome.highlighting",
 ]
 
 # enable autosummary plugin (table of contents for modules/classes/class
