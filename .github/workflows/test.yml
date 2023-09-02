@@ -29,15 +29,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install .[test]
-    - name: Check code formatting with black
+    - name: Check code formatting and linting
       if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.8' # linting should occur only once in the loop
       run: |
-        black . --check
-    - name: Lint with ruff
-      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.8' # linting should occur only once in the loop
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        ruff check .
+        make lint
     - name: Test with pytest and generate coverage report
       run: |
         pytest --cov=./ --cov-report=xml

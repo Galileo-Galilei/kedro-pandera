@@ -50,8 +50,9 @@ setup(
         "test": [
             "pytest>=7.0.0, <8.0.0",
             "pytest-cov>=4.0.0, <5.0.0",
-            "black>=23.0.0, <24.0.0",  # black guarantees stability on a calendar year basis
-            "ruff",  # no version since its evolving rapidly
+            "pytest-mock",
+            "pre-commit>=2.0.0,<4.0.0",
+            "cookiecutter",
         ],
         "dev": [
             "pre-commit>=2.0.0,<4.0.0",

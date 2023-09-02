@@ -25,3 +25,12 @@ def resolve_interpolated_yaml_schema(
     schema = select(key, default=None, _parent_=_parent_)
     pandera_schema = resolve_yaml_schema(schema)
     return pandera_schema
+
+
+def resolve_dataframe_model(schema_name):
+    import importlib
+
+    module, _, schema = schema_name.rpartition(".")
+    module = importlib.import_module(module)
+    print(f"{module=} {getattr(module, schema)=}")
+    return getattr(module, schema)

@@ -1,8 +1,3 @@
-.. ``kedro-mlflow`` documentation main file, created by
-   sphinx-quickstart on Mon Jul 13 14:21:13 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to kedro-pandera's documentation!
 ========================================
 
@@ -10,6 +5,7 @@ Welcome to kedro-pandera's documentation!
    :maxdepth: 4
 
    Tutorial <source/01_tutorials/01_getting_started.md>
+   DataFrameModel <source/01_tutorials/02_dataframe_model.md>
 
 
 Indices and tables

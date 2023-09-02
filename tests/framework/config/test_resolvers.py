@@ -1,3 +1,4 @@
+import sys
 from contextlib import contextmanager
 
 import pytest
@@ -7,6 +8,7 @@ from pandera import DataFrameSchema
 from pandera.errors import SchemaDefinitionError
 
 from kedro_pandera.framework.config.resolvers import (
+    resolve_dataframe_model,
     resolve_interpolated_yaml_schema,
     resolve_yaml_schema,
 )
@@ -121,21 +123,16 @@ def test_resolve_interpolated_yaml_schema():
     assert isinstance(df_schema, DataFrameSchema)
 
 
-def test_resolve_interpolated_yaml_schema_works_as_resolver():
-    # maybe not a useful test: after all, this is OmegaConf responsibility
-    with register_temporary_resolver("pa.yaml", resolve_interpolated_yaml_schema):
-        config = OmegaConf.create(
-            {
-                "my_data": {
-                    "type": "pandas.CSVDataSet",
-                    "filepath": "path/to/data.csv",
-                    "metadata": {
-                        "pandera": {
-                            "schema": "${pa.yaml:_data_schema}",
-                        }
-                    },
-                },
-                "_data_schema": MINIMAL_SCHEMA_EXAMPLE,
-            }
-        )
-        assert isinstance(config.my_data.metadata.pandera.schema, DataFrameSchema)
+@pytest.fixture
+def mock_dataframe_model(mocker):
+    sys.modules["dummy"] = mocker.Mock()  # This is the easiest way to mock a module
+    sys.modules["dummy.schema"] = mocker.Mock()
+    sys.modules["dummy.schema"].dataframe_model = mocker.Mock()
+    yield sys.modules["dummy.schema"].dataframe_model
+    del sys.modules["dummy"]
+    del sys.modules["dummy.schema"]
+
+
+def test_resolve_dataframe_model(mock_dataframe_model):
+    model = resolve_dataframe_model("dummy.schema.dataframe_model")
+    assert model == mock_dataframe_model

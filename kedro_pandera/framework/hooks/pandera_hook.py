@@ -7,6 +7,7 @@ from pandera.errors import SchemaError
 from kedro_pandera.framework.config.resolvers import (
     resolve_interpolated_yaml_schema,
     resolve_yaml_schema,
+    resolve_dataframe_model,
 )
 
 # if we do not import ``frictionless`` manually here, we get
@@ -40,6 +41,7 @@ class PanderaHook:
             {
                 "pa.dict": resolve_yaml_schema,
                 "pa.yaml": resolve_interpolated_yaml_schema,
+                "pa.python": resolve_dataframe_model,
             }
         )
 
