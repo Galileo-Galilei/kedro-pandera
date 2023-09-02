@@ -1,3 +1,2 @@
 pandera[io]>=0.15
-kedro@git+https://github.com/kedro-org/kedro.git
-# kedro>=0.18,<0.19
+kedro>=0.18.13,<0.19
