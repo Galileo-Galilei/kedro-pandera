@@ -32,21 +32,28 @@ release = kp_version
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "sphinx_click",
+    "sphinx_design",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
-    "sphinx_click",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.extlinks",
+    "sphinx.ext.viewcode",
     # "sphinx_autodoc_typehints",
     # "sphinx.ext.doctest",
     # "sphinx.ext.todo",
     # "sphinx.ext.coverage",
     # "sphinx.ext.mathjax",
     # "sphinx.ext.ifconfig",
-    # "sphinx.ext.viewcode",
+    # "sphinx_sitemap",
     # "nbsphinx",
     "sphinx_copybutton",
     "sphinx_markdown_tables",
     "myst_parser",
+    "sphinxawesome_theme",
+    "sphinxawesome_theme.docsearch",
+    "sphinxawesome_theme.highlighting",
 ]
 
 # enable autosummary plugin (table of contents for modules/classes/class
@@ -72,7 +79,7 @@ pygments_style = "sphinx"
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme"
+html_theme = "sphinxawesome_theme"
 
 # useful to create dropdown with the name of the directory as the section name
 # see https://stackoverflow.com/questions/36925871/toctree-nested-drop-down:
