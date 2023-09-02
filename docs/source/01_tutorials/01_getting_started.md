@@ -212,7 +212,7 @@ You can find all built-in checks avalaible in ``pandera`` in the [Check API docu
 ```
 
 ```{warning}
-[Custom checks](https://pandera.readthedocs.io/en/stable/dataframe_models.html?#custom-checks) and [hypothesis tests](https://pandera.readthedocs.io/en/stable/hypothesis.html) not available yet in kedro-pandera but will come soon!
+[Custom checks](https://pandera.readthedocs.io/en/stable/dataframe_models.html?#custom-checks) and [hypothesis tests](https://pandera.readthedocs.io/en/stable/hypothesis.html) require you using the [python API with Dataframe Model](./02_dataframe_model.md)
 ```
 
 ### Step 5: Run the pipeline and see it fail
