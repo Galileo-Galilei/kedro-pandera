@@ -9,6 +9,7 @@ jobs:
       PYTHON_PACKAGE: kedro_pandera
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+      contents: write  # IMPORTANT: this permission is mandatory for creating a release
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v3
@@ -25,7 +26,7 @@ jobs:
       # see https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
       id: set_package_version
       run: |
-        echo "::set-output name=PACKAGE_VERSION::$(cat $PYTHON_PACKAGE/__init__.py | grep -Po  '\d+\.\d+\.\d+')"
+        echo "PACKAGE_VERSION=$(cat $PYTHON_PACKAGE/__init__.py | grep -Po  '\d+\.\d+\.\d+')" >> $GITHUB_OUTPUT
     - name: Create temporary file with the body content for the release
       run: |
         grep -Poz "## \[${{steps.set_package_version.outputs.PACKAGE_VERSION}}] - \d{4}-\d{2}-\d{2}[\S\s]+?(?=## \[\d+\.\d+\.\d+\]|\[.+\]:)" CHANGELOG.md > release_body.md
