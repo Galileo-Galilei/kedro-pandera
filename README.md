@@ -48,7 +48,7 @@ The [release history](https://github.com/Galileo-Galilei/kedro-pandera/blob/main
 
 This package is still in active development. We use [SemVer](https://semver.org/) principles to version our releases. Until we reach `1.0.0` milestone, breaking changes will lead to `<minor>` version number increment, while releases which do not introduce breaking changes in the API will lead to `<patch>` version number increment.
 
-If you want to see how to migrate from one version of `kedro-pandera` to another, see the [migration guide](docs/source/migration_guide.md).
+If you want to see how to migrate from one version of `kedro-pandera` to another, see the [migration guide](./docs/source/migration_guide.md).
 
 # Can I contribute?
 
