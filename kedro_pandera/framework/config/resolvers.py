@@ -32,5 +32,4 @@ def resolve_dataframe_model(schema_name):
 
     module, _, schema = schema_name.rpartition(".")
     module = importlib.import_module(module)
-    print(f"{module=} {getattr(module, schema)=}")
     return getattr(module, schema)
