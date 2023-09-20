@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Optional
 
 import click
 import frictionless  # noqa: F401
@@ -63,7 +64,7 @@ def infer_dataset_schema(
     dataset_name: str,
     use_python_ext: bool = False,
     env: str = "base",
-    outfile: Optional[str] = None,
+    outfile: str | None = None,
 ):
     """Infer the schema of a dataset and dump it in a catalog file
     so that it will enable validation at runtime.

@@ -5,9 +5,9 @@ from kedro.framework.hooks import hook_impl
 from pandera.errors import SchemaError
 
 from kedro_pandera.framework.config.resolvers import (
+    resolve_dataframe_model,
     resolve_interpolated_yaml_schema,
     resolve_yaml_schema,
-    resolve_dataframe_model,
 )
 
 # if we do not import ``frictionless`` manually here, we get
