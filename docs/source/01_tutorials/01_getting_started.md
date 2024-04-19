@@ -74,7 +74,7 @@ kedro pandera infer -d example_iris_data
 You should see the following message:
 
 ```bash
-[08/09/23 15:24:01] INFO     Loading data from 'example_iris_data' (CSVDataSet)...                                                  data_catalog.py:475
+[08/09/23 15:24:01] INFO     Loading data from 'example_iris_data' (CSVDataset)...                                                  data_catalog.py:475
 The schema is written to /path/to/project/pandas-iris/conf/base/catalog_example_iris_data.yml
 ```
 
@@ -88,7 +88,7 @@ This CLI is a helper to avoid you to write the schema manually which is tedious 
 
 ```yaml
 example_iris_data:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/01_raw/iris.csv
   metadata:
     pandera:

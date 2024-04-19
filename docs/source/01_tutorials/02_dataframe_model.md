@@ -33,7 +33,7 @@ src/kedro_pandera_tutorial/schemas/
 ### Update the catalog
 ```yaml
 example_iris_data:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/01_raw/iris.csv
   metadata:
     pandera:

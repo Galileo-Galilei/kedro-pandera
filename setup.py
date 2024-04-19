@@ -48,11 +48,13 @@ setup(
             "myst-parser>=0.17.2,<2.1.0",
         ],
         "test": [
+            "ruff>=0.4.0, <0.5.0",
             "pytest>=7.0.0, <8.0.0",
             "pytest-cov>=4.0.0, <5.0.0",
             "pytest-mock",
             "pre-commit>=2.0.0,<4.0.0",
             "cookiecutter",
+            "kedro-datasets",
         ],
         "dev": [
             "pre-commit>=2.0.0,<4.0.0",

@@ -18,7 +18,7 @@ def extract_cmd_from_help(msg):
     return cmd_list
 
 
-def test_mlflow_commands_inside_kedro_project(monkeypatch, kedro_project):
+def test_pandera_commands_inside_kedro_project(monkeypatch, kedro_project):
     monkeypatch.chdir(kedro_project)
     # launch the command to initialize the project
     cli_runner = CliRunner()

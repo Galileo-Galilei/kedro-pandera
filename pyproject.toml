@@ -1,6 +1,8 @@
 [tool.ruff]
 line-length = 88
 show-fixes = true
+
+[tool.ruff.lint]
 select = [
     "F",  # Pyflakes
     "E",  # Pycodestyle
@@ -13,5 +15,5 @@ select = [
 ignore = ["E501"]  # Black take care off line-too-long
 unfixable = []
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "{tests,docs}/*" = ["T201"]  # Check print statement for kedro/ only
