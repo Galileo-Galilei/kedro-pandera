@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- :boom: :sparkles: :arrow_up: Drop support for ``kedro==0.18.x`` and add support for ``kedro==0.19.x`` ([#46](https://github.com/Galileo-Galilei/kedro-pandera/issues/46))
+
 ## [0.1.0] - 2023-09-02
 
 ### Added
