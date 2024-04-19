@@ -50,11 +50,11 @@ jobs:
       run: |
         git commit -am "Bump version and CHANGELOG for release ${{ steps.bump_version.outputs.package_version }}"
         git push
-    - name: Open a PR to merge the release to master
+    - name: Open a PR to merge the release to main
       id: open_pr
       run: |
-        gh pr create -B master -H release-${{ steps.bump_version.outputs.package_version }} --title "Release ${{ steps.bump_version.outputs.package_version }}" --body "Bump version and CHANGELOG for next release." --assignee "${{ github.repository_owner }}"
-        echo "pull_request_number=$(gh pr list --base master --json number,createdAt --jq 'sort_by(.createdAt) | reverse | .[0].number')" >> $GITHUB_OUTPUT
+        gh pr create -B main -H release-${{ steps.bump_version.outputs.package_version }} --title "Release ${{ steps.bump_version.outputs.package_version }}" --body "Bump version and CHANGELOG for next release." --assignee "${{ github.repository_owner }}"
+        echo "pull_request_number=$(gh pr list --base main --json number,createdAt --jq 'sort_by(.createdAt) | reverse | .[0].number')" >> $GITHUB_OUTPUT
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Change the commit message to add PR number
