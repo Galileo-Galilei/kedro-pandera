@@ -90,7 +90,7 @@ def test_resolve_yaml_schema_works_as_resolver():
         config = OmegaConf.create(
             {
                 "my_data": {
-                    "type": "pandas.CSVDataSet",
+                    "type": "pandas.CSVDataset",
                     "filepath": "path/to/data.csv",
                     "metadata": {
                         "pandera": {
@@ -108,7 +108,7 @@ def test_resolve_interpolated_yaml_schema():
     config = OmegaConf.create(
         {
             "my_data": {
-                "type": "pandas.CSVDataSet",
+                "type": "pandas.CSVDataset",
                 "filepath": "path/to/data.csv",
                 "metadata": {
                     "pandera": {
