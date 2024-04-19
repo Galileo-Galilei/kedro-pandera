@@ -8,6 +8,10 @@ jobs:
     strategy:
       matrix:
         python-version: [3.11]
+    environment: release
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
     env:
       PYTHON_PACKAGE: kedro_pandera
     steps:
@@ -60,6 +64,4 @@ jobs:
     - name: Publish distribution to PyPI  # official action from python maintainers
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        user: __token__
-        password: ${{ secrets.PYPI_PASSWORD }}
         verbose: true  # trace if the upload fails
