@@ -5,28 +5,29 @@ on: workflow_dispatch
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11]
     env:
       PYTHON_PACKAGE: kedro_pandera
-    permissions:
-      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
-      contents: write  # IMPORTANT: this permission is mandatory for creating a release
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v3
       with:
         fetch-depth: 0  # necessary to enable merging, all the history is needed
-    - name: Set up Python
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
-        python-version: "3.10"
+        python-version: ${{ matrix.python-version }}
     - name: Build package dist from source # A better way will be : https://packaging.python.org/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/ but pep 517 is still marked as experimental
       run: |
-        python setup.py sdist
+        pip install wheel
+        python setup.py sdist bdist_wheel
     - name: Set dynamically package version as output variable # see https://github.com/actions/create-release/issues/39
       # see https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
       id: set_package_version
       run: |
-        echo "PACKAGE_VERSION=$(cat $PYTHON_PACKAGE/__init__.py | grep -Po  '\d+\.\d+\.\d+')" >> $GITHUB_OUTPUT
+        echo "::set-output name=PACKAGE_VERSION::$(cat $PYTHON_PACKAGE/__init__.py | grep -Po  '\d+\.\d+\.\d+')"
     - name: Create temporary file with the body content for the release
       run: |
         grep -Poz "## \[${{steps.set_package_version.outputs.PACKAGE_VERSION}}] - \d{4}-\d{2}-\d{2}[\S\s]+?(?=## \[\d+\.\d+\.\d+\]|\[.+\]:)" CHANGELOG.md > release_body.md
@@ -49,7 +50,16 @@ jobs:
         release_id: ${{ steps.create_release.outputs.id }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Publish package distributions to PyPI
+    # - name: Publish distribution to Test PyPI  # official action from python maintainers
+    #   uses: pypa/gh-action-pypi-publish@release/v1
+    #   with:
+    #     user: __token__
+    #     password: ${{ secrets.TEST_PYPI_PASSWORD }}
+    #     repository_url: https://test.pypi.org/legacy/
+    #     verbose: true  # trace if the upload fails
+    - name: Publish distribution to PyPI  # official action from python maintainers
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
+        user: __token__
+        password: ${{ secrets.PYPI_PASSWORD }}
         verbose: true  # trace if the upload fails
