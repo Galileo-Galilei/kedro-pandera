@@ -34,7 +34,6 @@ release = kp_version
 extensions = [
     "sphinx_click",
     "sphinx_design",
-    "sphinx_docsearch",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
@@ -53,7 +52,7 @@ extensions = [
     "sphinx_markdown_tables",
     "myst_parser",
     "sphinxawesome_theme",
-    "sphinxawesome_theme.docsearch",
+    "sphinx_docsearch",  # before: "sphinxawesome_theme.docsearch",
     "sphinxawesome_theme.highlighting",
 ]
 
