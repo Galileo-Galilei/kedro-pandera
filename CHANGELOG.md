@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2024-05-06
+
 -   :bug: Fix dataset reference in hook for kedro >= 0.19.0
 
 ## [0.2.0] - 2024-04-19
@@ -21,7 +23,9 @@
 -   :loud_sound: `kedro-pandera` logs defaults is set to `INFO` so it is visible by default in the kedro logs ([#13](https://github.com/Galileo-Galilei/kedro-pandera/pull/13))
 -   :memo: Add a tutorial for using `kedro-pandera` ([#5](https://github.com/Galileo-Galilei/kedro-pandera/pull/5))
 
-[Unreleased]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.2.0...HEAD
+[Unreleased]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.3.0...HEAD
+
+[0.3.0]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.2.0...0.3.0
 
 [0.2.0]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.1.0...0.2.0
 
