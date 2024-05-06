@@ -34,6 +34,7 @@ release = kp_version
 extensions = [
     "sphinx_click",
     "sphinx_design",
+    "sphinx_docsearch",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
