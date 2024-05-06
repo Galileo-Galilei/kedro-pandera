@@ -38,10 +38,11 @@ setup(
     install_requires=base_requirements,
     extras_require={
         "doc": [
-            "sphinx>=4.5.0,<7.2.0",  # https://github.com/kai687/sphinxawesome-theme/issues/1464
+            "sphinx>=4.5.0,<7.3.0",  # https://github.com/kai687/sphinxawesome-theme/issues/1464
             "sphinxawesome-theme",
+            "sphinx-docsearch",
             "sphinx-markdown-tables~=0.0.15",
-            "sphinx-click>=3.1,<4.5",
+            "sphinx-click>=3.1,<6.0",
             "sphinx_copybutton~=0.5.0",
             # "sphinx-sitemap",
             "sphinx-design",

@@ -52,7 +52,7 @@ extensions = [
     "sphinx_markdown_tables",
     "myst_parser",
     "sphinxawesome_theme",
-    "sphinxawesome_theme.docsearch",
+    "sphinx_docsearch",  # before: "sphinxawesome_theme.docsearch",
     "sphinxawesome_theme.highlighting",
 ]
 
