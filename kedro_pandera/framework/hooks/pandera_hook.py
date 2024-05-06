@@ -51,13 +51,11 @@ class PanderaHook:
     ):
         for name, data in inputs.items():
             if (
-                catalog._data_sets[name].metadata is not None
-                and "pandera" in catalog._data_sets[name].metadata
+                catalog._datasets[name].metadata is not None
+                and "pandera" in catalog._datasets[name].metadata
             ):
                 try:
-                    catalog._data_sets[name].metadata["pandera"]["schema"].validate(
-                        data
-                    )
+                    catalog._datasets[name].metadata["pandera"]["schema"].validate(data)
                 except SchemaError as err:
                     self._logger.error(
                         f"Dataset '{name}' pandera validation failed before running '{node.name}', see details in the error message. "
