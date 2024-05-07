@@ -46,7 +46,7 @@ setup(
             "sphinx_copybutton~=0.5.0",
             # "sphinx-sitemap",
             "sphinx-design",
-            "myst-parser>=0.17.2,<2.1.0",
+            "myst-parser>=0.17.2,<3.1.0",
         ],
         "test": [
             "ruff>=0.4.0, <0.5.0",
