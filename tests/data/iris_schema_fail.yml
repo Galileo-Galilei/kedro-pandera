@@ -1,0 +1,85 @@
+schema_type: dataframe
+version: 0.18.3
+columns:
+  sepal_length:
+    title: null
+    description: null
+    dtype: float32
+    nullable: false
+    checks:
+      greater_than_or_equal_to: 4.3
+      less_than_or_equal_to: 7.9
+    unique: false
+    coerce: false
+    required: true
+    regex: false
+  sepal_width:
+    title: null
+    description: null
+    dtype: float64
+    nullable: false
+    checks:
+      greater_than_or_equal_to: 2.0
+      less_than_or_equal_to: 4.4
+    unique: false
+    coerce: false
+    required: true
+    regex: false
+  petal_length:
+    title: null
+    description: null
+    dtype: float64
+    nullable: false
+    checks:
+      greater_than_or_equal_to: 1.0
+      less_than_or_equal_to: 6.9
+    unique: false
+    coerce: false
+    required: true
+    regex: false
+  petal_width:
+    title: null
+    description: null
+    dtype: float64
+    nullable: false
+    checks:
+      greater_than_or_equal_to: 0.1
+      less_than_or_equal_to: 2.5
+    unique: false
+    coerce: false
+    required: true
+    regex: false
+  species:
+    title: null
+    description: null
+    dtype: string
+    nullable: false
+    checks:
+      isin: ["satosa", "versicolor", "virginica"]
+    unique: false
+    coerce: false
+    required: true
+    regex: false
+checks: null
+index:
+- title: null
+  description: null
+  dtype: int64
+  nullable: false
+  checks:
+    greater_than_or_equal_to: 0.0
+    less_than_or_equal_to: 149.0
+  name: null
+  unique: false
+  coerce: false
+dtype: null
+coerce: true
+strict: false
+name: null
+ordered: false
+unique: null
+report_duplicates: all
+unique_column_names: false
+add_missing_columns: false
+title: null
+description: null
