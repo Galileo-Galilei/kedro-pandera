@@ -1,7 +1,10 @@
 import logging
+from typing import Any, Dict
 
 from kedro.framework.context import KedroContext
 from kedro.framework.hooks import hook_impl
+from kedro.io import DataCatalog
+from kedro.pipeline.node import Node
 from pandera.errors import SchemaError
 
 from kedro_pandera.framework.config.resolvers import (
@@ -22,6 +25,10 @@ from kedro_pandera.framework.config.resolvers import (
 
 
 class PanderaHook:
+    def __init__(self) -> None:
+        self.params: Dict[str, Any] = {}
+        self.default_convert = False
+
     @property
     def _logger(self) -> logging.Logger:
         return logging.getLogger(__name__)
@@ -46,19 +53,35 @@ class PanderaHook:
         )
 
     @hook_impl
-    def before_node_run(  # noqa : PLR0913
-        self, node, catalog, inputs, is_async, session_id
+    def after_catalog_created(self, catalog: DataCatalog) -> None:
+        if "params:pandera" in catalog.list():
+            self.params = catalog.load("params:pandera")
+        self.default_convert = self.params.get("convert", False)
+
+    def _validate_datasets(
+        self, node: Node, catalog: DataCatalog, datasets: Dict[str, Any]
     ):
-        for name, data in inputs.items():
-            if (
-                catalog._datasets[name].metadata is not None
-                and "pandera" in catalog._datasets[name].metadata
-            ):
+        validated_datasets = {}
+        for name, data in datasets.items():
+            if name not in catalog._datasets:
+                # dataset not found in catalog
+                return None
+            dataset_metadata = catalog._datasets[name].metadata
+            if dataset_metadata and "pandera" in dataset_metadata:
                 try:
-                    catalog._datasets[name].metadata["pandera"]["schema"].validate(data)
+                    schema = dataset_metadata["pandera"]["schema"]
+                    validated_dataset = schema.validate(data)
+                    convert = dataset_metadata["pandera"].get(
+                        "convert", self.default_convert
+                    )
+                    self._logger.info(
+                        f"(kedro-pandera) Dataset '{name}' was successfully validated with pandera"
+                    )
+                    if convert:
+                        validated_datasets[name] = validated_dataset
                 except SchemaError as err:
                     self._logger.error(
-                        f"Dataset '{name}' pandera validation failed before running '{node.name}', see details in the error message. "
+                        f"Dataset '{name}' pandera validation failed before running '{node.name}', see details in the error message."
                     )
                     raise err
                 except Exception as err:
@@ -66,10 +89,17 @@ class PanderaHook:
                         f"Dataset '{name}' validation raised an unknown error before running '{node.name}'"
                     )
                     raise err
+        return validated_datasets
 
-                self._logger.info(
-                    f"(kedro-pandera) Dataset '{name}' was successfully validated with pandera"
-                )
+    @hook_impl
+    def before_node_run(  # noqa : PLR0913
+        self, node: Node, catalog, inputs, is_async, session_id
+    ):
+        return self._validate_datasets(node, catalog, inputs)
+
+    @hook_impl
+    def after_node_run(self, node: Node, catalog: DataCatalog, outputs: Dict[str, Any]):
+        return self._validate_datasets(node, catalog, outputs)
 
 
 pandera_hook = PanderaHook()

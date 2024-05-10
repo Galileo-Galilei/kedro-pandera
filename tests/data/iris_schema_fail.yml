@@ -54,7 +54,8 @@ columns:
     description: null
     dtype: string
     nullable: false
-    checks: null
+    checks:
+      isin: ["satosa", "versicolor", "virginica"]
     unique: false
     coerce: false
     required: true
