@@ -42,7 +42,7 @@ setup(
             "sphinxawesome-theme",
             "sphinx-docsearch",
             "sphinx-markdown-tables~=0.0.15",
-            "sphinx-click>=3.1,<6.0",
+            "sphinx-click>=3.1,<7.0",
             "sphinx_copybutton~=0.5.0",
             # "sphinx-sitemap",
             "sphinx-design",
