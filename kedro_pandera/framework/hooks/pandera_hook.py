@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, Set
 
 from kedro.framework.context import KedroContext
 from kedro.framework.hooks import hook_impl
@@ -25,6 +25,9 @@ from kedro_pandera.framework.config.resolvers import (
 
 
 class PanderaHook:
+    def __init__(self) -> None:
+        self._validated_datasets: Set[str] = set()
+
     @property
     def _logger(self) -> logging.Logger:
         return logging.getLogger(__name__)
@@ -55,9 +58,11 @@ class PanderaHook:
             if (
                 catalog._datasets[name].metadata is not None
                 and "pandera" in catalog._datasets[name].metadata
+                and name not in self._validated_datasets
             ):
                 try:
                     catalog._datasets[name].metadata["pandera"]["schema"].validate(data)
+                    self._validated_datasets.add(name)
                 except SchemaError as err:
                     self._logger.error(
                         f"Dataset '{name}' pandera validation failed before running '{node.name}', see details in the error message. "
@@ -82,11 +87,11 @@ class PanderaHook:
         is_async,
         session_id,
     ):
-        return self._validate_datasets(node, catalog, inputs)
+        self._validate_datasets(node, catalog, inputs)
 
     @hook_impl
     def after_node_run(self, node: Node, catalog: DataCatalog, outputs: Dict[str, Any]):
-        return self._validate_datasets(node, catalog, outputs)
+        self._validate_datasets(node, catalog, outputs)
 
 
 pandera_hook = PanderaHook()
