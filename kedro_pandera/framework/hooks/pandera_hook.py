@@ -1,7 +1,10 @@
 import logging
+from typing import Any, Dict, Set
 
 from kedro.framework.context import KedroContext
 from kedro.framework.hooks import hook_impl
+from kedro.io import DataCatalog
+from kedro.pipeline.node import Node
 from pandera.errors import SchemaError
 
 from kedro_pandera.framework.config.resolvers import (
@@ -22,6 +25,9 @@ from kedro_pandera.framework.config.resolvers import (
 
 
 class PanderaHook:
+    def __init__(self) -> None:
+        self._validated_datasets: Set[str] = set()
+
     @property
     def _logger(self) -> logging.Logger:
         return logging.getLogger(__name__)
@@ -45,17 +51,18 @@ class PanderaHook:
             }
         )
 
-    @hook_impl
-    def before_node_run(  # noqa : PLR0913
-        self, node, catalog, inputs, is_async, session_id
+    def _validate_datasets(
+        self, node: Node, catalog: DataCatalog, datasets: Dict[str, Any]
     ):
-        for name, data in inputs.items():
+        for name, data in datasets.items():
             if (
                 catalog._datasets[name].metadata is not None
                 and "pandera" in catalog._datasets[name].metadata
+                and name not in self._validated_datasets
             ):
                 try:
                     catalog._datasets[name].metadata["pandera"]["schema"].validate(data)
+                    self._validated_datasets.add(name)
                 except SchemaError as err:
                     self._logger.error(
                         f"Dataset '{name}' pandera validation failed before running '{node.name}', see details in the error message. "
@@ -70,6 +77,21 @@ class PanderaHook:
                 self._logger.info(
                     f"(kedro-pandera) Dataset '{name}' was successfully validated with pandera"
                 )
+
+    @hook_impl
+    def before_node_run(  # noqa : PLR0913
+        self,
+        node: Node,
+        catalog: DataCatalog,
+        inputs: Dict[str, Any],
+        is_async,
+        session_id,
+    ):
+        self._validate_datasets(node, catalog, inputs)
+
+    @hook_impl
+    def after_node_run(self, node: Node, catalog: DataCatalog, outputs: Dict[str, Any]):
+        self._validate_datasets(node, catalog, outputs)
 
 
 pandera_hook = PanderaHook()
