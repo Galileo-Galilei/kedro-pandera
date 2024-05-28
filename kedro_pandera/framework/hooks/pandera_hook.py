@@ -55,13 +55,14 @@ class PanderaHook:
         self, node: Node, catalog: DataCatalog, datasets: Dict[str, Any]
     ):
         for name, data in datasets.items():
+            metadata = getattr(catalog._datasets[name], "metadata", None)
             if (
-                catalog._datasets[name].metadata is not None
-                and "pandera" in catalog._datasets[name].metadata
+                metadata is not None
+                and "pandera" in metadata
                 and name not in self._validated_datasets
             ):
                 try:
-                    catalog._datasets[name].metadata["pandera"]["schema"].validate(data)
+                    metadata["pandera"]["schema"].validate(data)
                     self._validated_datasets.add(name)
                 except SchemaError as err:
                     self._logger.error(
