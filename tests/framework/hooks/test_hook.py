@@ -1,6 +1,9 @@
 import pytest
-from kedro.io import DataCatalog
-from kedro.pipeline import node
+from kedro.framework.hooks import _create_hook_manager
+from kedro.framework.hooks.manager import _register_hooks
+from kedro.io import DataCatalog, LambdaDataset
+from kedro.pipeline import node, pipeline
+from kedro.runner import SequentialRunner
 from kedro_datasets.pandas import CSVDataset
 from pandera.errors import SchemaError
 from pandera.io import from_yaml
@@ -118,3 +121,24 @@ def test_validate_only_once(caplog):
     )
     # should only be validated once
     assert caplog.text.count("successfully validated") == 1
+
+
+def test_no_exception_on_memory_dataset_output():
+    test_hook_manager = _create_hook_manager()
+    test_hook = _get_test_hook()
+    HOOKS = (test_hook,)
+    _register_hooks(test_hook_manager, HOOKS)
+    test_catalog = DataCatalog(
+        {
+            "Input": LambdaDataset(load=lambda: "data", save=lambda data: None),
+            "Output": LambdaDataset(load=lambda: "data", save=lambda data: None),
+        }
+    )
+    test_pipeline = pipeline(
+        [
+            node(func=lambda x: x, inputs="Input", outputs="MemOutput", name="node1"),
+            node(func=lambda x: x, inputs="MemOutput", outputs="Output", name="node2"),
+        ]
+    )
+    assert test_hook_manager.is_registered(test_hook)
+    SequentialRunner().run(test_pipeline, test_catalog, hook_manager=test_hook_manager)
