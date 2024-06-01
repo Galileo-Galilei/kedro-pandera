@@ -55,7 +55,8 @@ class PanderaHook:
         self, node: Node, catalog: DataCatalog, datasets: Dict[str, Any]
     ):
         for name, data in datasets.items():
-            metadata = getattr(catalog._datasets[name], "metadata", None)
+            dataset = catalog._datasets.get(name)
+            metadata = getattr(dataset, "metadata", None)
             if (
                 metadata is not None
                 and "pandera" in metadata
