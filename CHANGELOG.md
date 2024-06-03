@@ -2,13 +2,15 @@
 
 ## [Unreleased]
 
+## [0.2.2] - 2024-06-03
+
 ### Added
 
-- :sparkles: Validate output datasets  ([#20](https://github.com/Galileo-Galilei/kedro-pandera/issues/20), [#69](https://github.com/Galileo-Galilei/kedro-pandera/issues/69))
+-   :sparkles: Validate output datasets  ([#20](https://github.com/Galileo-Galilei/kedro-pandera/issues/20), [#69](https://github.com/Galileo-Galilei/kedro-pandera/issues/69))
 
 ### Fixed
 
-- :bug: Fix `AttributeError` in datasets with missing `metadata` parameter ([#67](https://github.com/Galileo-Galilei/kedro-pandera/issues/67))
+-   :bug: Fix `AttributeError` in datasets with missing `metadata` parameter ([#67](https://github.com/Galileo-Galilei/kedro-pandera/issues/67))
 
 ## [0.2.1] - 2024-05-06
 
@@ -33,7 +35,9 @@
 -   :loud_sound: `kedro-pandera` logs defaults is set to `INFO` so it is visible by default in the kedro logs ([#13](https://github.com/Galileo-Galilei/kedro-pandera/pull/13))
 -   :memo: Add a tutorial for using `kedro-pandera` ([#5](https://github.com/Galileo-Galilei/kedro-pandera/pull/5))
 
-[Unreleased]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.2.1...HEAD
+[Unreleased]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.2.2...HEAD
+
+[0.2.2]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.2.1...0.2.2
 
 [0.2.1]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.2.0...0.2.1
 
