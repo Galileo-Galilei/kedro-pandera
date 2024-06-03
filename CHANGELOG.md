@@ -2,9 +2,17 @@
 
 ## [Unreleased]
 
+### Added
+
+- :sparkles: Validate output datasets  ([#20](https://github.com/Galileo-Galilei/kedro-pandera/issues/20), [#69](https://github.com/Galileo-Galilei/kedro-pandera/issues/69))
+
+### Fixed
+
 - :bug: Fix `AttributeError` in datasets with missing `metadata` parameter ([#67](https://github.com/Galileo-Galilei/kedro-pandera/issues/67))
 
 ## [0.2.1] - 2024-05-06
+
+### Fixed
 
 -   :bug: Fix dataset reference in hook for kedro >= 0.19.0
 
