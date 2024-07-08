@@ -49,7 +49,7 @@ setup(
             "myst-parser>=0.17.2,<2.1.0",
         ],
         "test": [
-            "ruff>=0.4.0, <0.5.0",
+            "ruff>=0.5.1, <0.6.0",
             "pytest>=7.0.0, <8.0.0",
             "pytest-cov>=4.0.0, <5.0.0",
             "pytest-mock",
