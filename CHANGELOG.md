@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- :sparkles: Add keyword arguments to schema's validate() method ([#73](https://github.com/Galileo-Galilei/kedro-pandera/issues/73))
+
 ## [0.2.2] - 2024-06-03
 
 ### Added
