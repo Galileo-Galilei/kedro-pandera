@@ -19,7 +19,13 @@ def _get_test_catalog(csv_file, schema_file):
                 filepath=csv_file,
                 metadata={"pandera": {"schema": test_schema}},
             ),
-        }
+        },
+        dataset_patterns={
+            "{foo}.iris": {
+                "type": "MemoryDataset",
+                "metadata": {"pandera": {"schema": test_schema}},
+            }
+        },
     )
     return test_catalog
 
@@ -80,20 +86,40 @@ def test_hook_unexpected_error():
         )
 
 
-def test_hook_output_validation():
+def test_hook_output_validation(caplog):
     test_catalog = _get_test_catalog(
         csv_file="tests/data/iris.csv", schema_file="tests/data/iris_schema.yml"
     )
     test_hook = _get_test_hook()
-    test_outputs = {"iris": test_catalog.load("iris")}
+    iris_data = test_catalog.load("iris")
+    test_outputs = {"iris": iris_data}
     test_node = node(
-        name="test_node", func=lambda iris: True, inputs=["iris"], outputs=None
+        name="test_node", func=lambda: iris_data, inputs=None, outputs=["iris"]
     )
     test_hook.after_node_run(
         node=test_node,
         catalog=test_catalog,
         outputs=test_outputs,
     )
+    assert caplog.text.count("successfully validated") == 1
+
+
+def test_hook_factory_output_validation(caplog):
+    test_catalog = _get_test_catalog(
+        csv_file="tests/data/iris.csv", schema_file="tests/data/iris_schema.yml"
+    )
+    test_hook = _get_test_hook()
+    iris_data = test_catalog.load("iris")
+    test_outputs = {"factory.iris": iris_data}
+    test_node = node(
+        name="test_node", func=lambda: iris_data, inputs=None, outputs=["factory.iris"]
+    )
+    test_hook.after_node_run(
+        node=test_node,
+        catalog=test_catalog,
+        outputs=test_outputs,
+    )
+    assert caplog.text.count("successfully validated") == 1
 
 
 def test_validate_only_once(caplog):
