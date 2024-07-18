@@ -38,21 +38,21 @@ setup(
     install_requires=base_requirements,
     extras_require={
         "doc": [
-            "sphinx>=4.5.0,<7.3.0",  # https://github.com/kai687/sphinxawesome-theme/issues/1464
+            "sphinx>=4.5.0,<7.5.0",  # https://github.com/kai687/sphinxawesome-theme/issues/1464
             "sphinxawesome-theme",
             "sphinx-docsearch",
             "sphinx-markdown-tables~=0.0.15",
-            "sphinx-click>=3.1,<6.0",
+            "sphinx-click>=3.1,<7.0",
             "sphinx_copybutton~=0.5.0",
             # "sphinx-sitemap",
             "sphinx-design",
-            "myst-parser>=0.17.2,<2.1.0",
+            "myst-parser>=0.17.2,<3.1.0",
         ],
         "test": [
-            "ruff>=0.4.0, <0.5.0",
+            "ruff>=0.5.0, <0.6.0",
             "pyspark>=2.2, <4.0",
-            "pytest>=7.0.0, <8.0.0",
-            "pytest-cov>=4.0.0, <5.0.0",
+            "pytest>=7.0.0, <9.0.0",
+            "pytest-cov>=4.0.0, <6.0.0",
             "pytest-mock",
             "pre-commit>=2.0.0,<4.0.0",
             "cookiecutter",
