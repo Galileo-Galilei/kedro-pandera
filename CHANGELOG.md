@@ -2,14 +2,15 @@
 
 ## [Unreleased]
 
+## [0.2.3] - 2024-07-18
+
 ### Added
 
-- :sparkles: Add keyword arguments to schema's validate() method ([#73](https://github.com/Galileo-Galilei/kedro-pandera/issues/73))
+-   :sparkles: Add keyword arguments to schema's validate() method ([#73](https://github.com/Galileo-Galilei/kedro-pandera/issues/73))
 
 ### Fixed
 
 -   :bug: Fix not validating output factory datasets ([#80](https://github.com/Galileo-Galilei/kedro-pandera/issues/80))
-
 
 ## [0.2.2] - 2024-06-03
 
@@ -44,7 +45,9 @@
 -   :loud_sound: `kedro-pandera` logs defaults is set to `INFO` so it is visible by default in the kedro logs ([#13](https://github.com/Galileo-Galilei/kedro-pandera/pull/13))
 -   :memo: Add a tutorial for using `kedro-pandera` ([#5](https://github.com/Galileo-Galilei/kedro-pandera/pull/5))
 
-[Unreleased]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.2.2...HEAD
+[Unreleased]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.2.3...HEAD
+
+[0.2.3]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.2.2...0.2.3
 
 [0.2.2]: https://github.com/Galileo-Galilei/kedro-pandera/compare/0.2.1...0.2.2
 
