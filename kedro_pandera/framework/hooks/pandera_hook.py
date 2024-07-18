@@ -62,8 +62,10 @@ class PanderaHook:
                 and "pandera" in metadata
                 and name not in self._validated_datasets
             ):
+                schema = metadata["pandera"]["schema"]
+                validate_kwargs = metadata["pandera"].get("validate_kwargs", dict())
                 try:
-                    metadata["pandera"]["schema"].validate(data)
+                    schema.validate(data, **validate_kwargs)
                     self._validated_datasets.add(name)
                 except SchemaError as err:
                     self._logger.error(
