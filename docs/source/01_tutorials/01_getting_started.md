@@ -6,7 +6,7 @@
 
 ### Create a virtual environment
 
-It is recommended to create a virutal environment to install your packages. You can install ``kedro-pandera`` from PyPI.
+It is recommended to create a virtual environment to install your packages. You can install ``kedro-pandera`` from PyPI.
 ```bash
 conda create -n kedro-pandera-tutorial python=3.10 -y
 conda activate kedro-pandera-tutorial
