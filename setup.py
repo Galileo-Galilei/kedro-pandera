@@ -51,6 +51,9 @@ setup(
         "test": [
             "ruff>=0.5.0, <0.6.0",
             "pyspark>=2.2, <4.0",
+            "pyarrow>=4.0.0",
+            "protobuf",
+            "grpcio>=1.48.1",
             "pytest>=7.0.0, <9.0.0",
             "pytest-cov>=4.0.0, <6.0.0",
             "pytest-mock",
@@ -80,6 +83,8 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Framework :: Kedro",
         "Environment :: Plugins",
         "Intended Audience :: Developers",

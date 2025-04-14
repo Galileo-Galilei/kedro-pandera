@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python-version: ["3.8", "3.11"]
+        python-version: ["3.8", "3.13"]
         os: [ubuntu-latest, macos-latest, windows-latest]
     env:
       OS: ${{ matrix.os }}
@@ -30,11 +30,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install .[test]
     - name: Check code formatting with ruff
-      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11' # linting should occur only once in the loop
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.13' # linting should occur only once in the loop
       run: |
         ruff format . --check
     - name: Check import order and syntax with ruff
-      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11' # linting should occur only once in the loop
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.13' # linting should occur only once in the loop
       #"F",  # Pyflakes
       #"E",  # Pycodestyle
       # "W",  # Pycodestyle
@@ -50,7 +50,7 @@ jobs:
         pytest --cov=./ --cov-report=xml
     - name: Upload coverage report to Codecov
       uses: codecov/codecov-action@v4
-      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11' # upload should occur only once in the loop
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.13' # upload should occur only once in the loop
       with:
         token: ${{ secrets.CODECOV_TOKEN }}  # token is not mandatory but make access more stable
         # use_oidc: true would better?
