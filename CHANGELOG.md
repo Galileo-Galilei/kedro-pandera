@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Addded
+
+- :sparkles: Remove upper bound on Python version and support up to 3.13 ([#92](https://github.com/Galileo-Galilei/kedro-pandera/pull/92))
+
 ## [0.2.3] - 2024-07-18
 
 ### Added
