@@ -1,6 +1,5 @@
 default_stages: [commit, manual]
 
-exclude: ^(kedro_mlflow/template/project/run.py|tests/_data/)
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.

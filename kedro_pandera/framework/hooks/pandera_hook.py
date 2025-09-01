@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import logging
-from typing import Any, Dict, Set
+from typing import Any
 
 from kedro.framework.context import KedroContext
 from kedro.framework.hooks import hook_impl
@@ -26,7 +28,7 @@ from kedro_pandera.framework.config.resolvers import (
 
 class PanderaHook:
     def __init__(self) -> None:
-        self._validated_datasets: Set[str] = set()
+        self._validated_datasets: set[str] = set()
 
     @property
     def _logger(self) -> logging.Logger:
@@ -52,7 +54,7 @@ class PanderaHook:
         )
 
     def _validate_datasets(
-        self, node: Node, catalog: DataCatalog, datasets: Dict[str, Any]
+        self, node: Node, catalog: DataCatalog, datasets: dict[str, Any]
     ):
         for name, data in datasets.items():
             dataset = catalog[name]
@@ -87,13 +89,13 @@ class PanderaHook:
         self,
         node: Node,
         catalog: DataCatalog,
-        inputs: Dict[str, Any],
+        inputs: dict[str, Any],
         is_async,
     ):
         self._validate_datasets(node, catalog, inputs)
 
     @hook_impl
-    def after_node_run(self, node: Node, catalog: DataCatalog, outputs: Dict[str, Any]):
+    def after_node_run(self, node: Node, catalog: DataCatalog, outputs: dict[str, Any]):
         self._validate_datasets(node, catalog, outputs)
 
 
