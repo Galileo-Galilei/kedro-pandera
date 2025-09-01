@@ -58,6 +58,7 @@ setup(
             "cookiecutter",
             "kedro-datasets[pandas-csvdataset]",
             "setuptools",  # remove from standard lib since Python 3.12
+            "pyarrow",
         ],
         "dev": [
             "pre-commit>=2.0.0,<4.0.0",
