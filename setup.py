@@ -57,6 +57,7 @@ setup(
             "pre-commit>=2.0.0,<4.0.0",
             "cookiecutter",
             "kedro-datasets",
+            "pandas",
         ],
         "dev": [
             "pre-commit>=2.0.0,<4.0.0",
