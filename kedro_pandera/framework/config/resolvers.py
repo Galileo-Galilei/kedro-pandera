@@ -10,6 +10,11 @@ def resolve_yaml_schema(schema: str) -> DataFrameSchema:
     # schema: ${pa.dict:${oc.select:_example_iris_data_schema,null}}
 
     # This will fail (e.g. with the CLI "kedro pandera infer") if the key does not exist yet, that's why we need a default "null"
+    # Convert OmegaConf DictConfig to plain dict if needed
+    from omegaconf import DictConfig, OmegaConf
+
+    if isinstance(schema, DictConfig):
+        schema = OmegaConf.to_container(schema, resolve=True)
     pandera_schema = deserialize_schema(schema)
     return pandera_schema
 

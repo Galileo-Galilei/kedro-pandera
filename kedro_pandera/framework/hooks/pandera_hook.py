@@ -55,7 +55,7 @@ class PanderaHook:
         self, node: Node, catalog: DataCatalog, datasets: Dict[str, Any]
     ):
         for name, data in datasets.items():
-            dataset = catalog._get_dataset(name)
+            dataset = catalog[name]
             metadata = getattr(dataset, "metadata", None)
             if (
                 metadata is not None
@@ -89,7 +89,6 @@ class PanderaHook:
         catalog: DataCatalog,
         inputs: Dict[str, Any],
         is_async,
-        session_id,
     ):
         self._validate_datasets(node, catalog, inputs)
 
