@@ -1,6 +1,7 @@
 [tool.ruff]
 line-length = 88
 show-fixes = true
+exclude = ["tests/_data/**/*.py"]
 
 [tool.ruff.lint]
 select = [

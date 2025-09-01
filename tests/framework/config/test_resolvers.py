@@ -4,7 +4,7 @@ from contextlib import contextmanager
 import pytest
 import yaml
 from omegaconf import OmegaConf
-from pandera import DataFrameSchema
+from pandera.api.pandas.container import DataFrameSchema
 from pandera.errors import SchemaDefinitionError
 
 from kedro_pandera.framework.config.resolvers import (
@@ -35,30 +35,30 @@ MINIMAL_SCHEMA_EXAMPLE = yaml.safe_load(
 schema_type: dataframe
 version: 0.16.1
 columns:
-sepal_length:
+  sepal_length:
     title: null
     description: null
     dtype: float64
     nullable: false
     checks:
-    greater_than_or_equal_to: 4.3
-    less_than_or_equal_to: 7.9
+      greater_than_or_equal_to: 4.3
+      less_than_or_equal_to: 7.9
     unique: false
     coerce: false
     required: true
     regex: false
 checks: null
 index:
-- title: null
-description: null
-dtype: int64
-nullable: false
-checks:
-    greater_than_or_equal_to: 0.0
-    less_than_or_equal_to: 149.0
-name: null
-unique: false
-coerce: false
+  - title: null
+    description: null
+    dtype: int64
+    nullable: false
+    checks:
+      greater_than_or_equal_to: 0.0
+      less_than_or_equal_to: 149.0
+    name: null
+    unique: false
+    coerce: false
 dtype: null
 coerce: true
 strict: false

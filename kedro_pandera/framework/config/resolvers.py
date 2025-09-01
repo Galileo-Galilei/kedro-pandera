@@ -1,4 +1,8 @@
-from omegaconf import Container
+from __future__ import annotations
+
+import importlib
+
+from omegaconf import Container, DictConfig, OmegaConf
 from omegaconf.resolvers.oc import select
 from pandera import DataFrameSchema
 from pandera.io import deserialize_schema
@@ -10,6 +14,10 @@ def resolve_yaml_schema(schema: str) -> DataFrameSchema:
     # schema: ${pa.dict:${oc.select:_example_iris_data_schema,null}}
 
     # This will fail (e.g. with the CLI "kedro pandera infer") if the key does not exist yet, that's why we need a default "null"
+    # Convert OmegaConf DictConfig to plain dict if needed
+
+    if isinstance(schema, DictConfig):
+        schema = OmegaConf.to_container(schema, resolve=True)
     pandera_schema = deserialize_schema(schema)
     return pandera_schema
 
@@ -28,8 +36,6 @@ def resolve_interpolated_yaml_schema(
 
 
 def resolve_dataframe_model(schema_name):
-    import importlib
-
     module, _, schema = schema_name.rpartition(".")
     module = importlib.import_module(module)
     return getattr(module, schema)

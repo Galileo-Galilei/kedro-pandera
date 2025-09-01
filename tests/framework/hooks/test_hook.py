@@ -1,12 +1,15 @@
-from typing import Any, Dict
+from __future__ import annotations
 
+from typing import Any
+
+import kedro
 import pandas as pd
 import pandera.pyspark as ps
 import pyspark.sql.types as T
 import pytest
 from kedro.framework.hooks import _create_hook_manager
 from kedro.framework.hooks.manager import _register_hooks
-from kedro.io import DataCatalog, LambdaDataset
+from kedro.io import DataCatalog, MemoryDataset
 from kedro.pipeline import Pipeline, node, pipeline
 from kedro.runner import SequentialRunner
 from kedro_datasets.pandas import CSVDataset
@@ -19,20 +22,40 @@ from kedro_pandera.framework.hooks.pandera_hook import PanderaHook
 
 def _get_test_catalog(csv_file, schema_file):
     test_schema = from_yaml(schema_file)
-    test_catalog = DataCatalog(
-        {
-            "iris": CSVDataset(
-                filepath=csv_file,
-                metadata={"pandera": {"schema": test_schema}},
-            ),
-        },
-        dataset_patterns={
-            "{foo}.iris": {
+
+    # Check Kedro version to use appropriate catalog creation method
+    kedro_version = tuple(map(int, kedro.__version__.split(".")[:2]))
+
+    if kedro_version >= (1, 0):
+        # Kedro 1.0+ uses DataCatalog.from_config
+        catalog_config = {
+            "iris": {
+                "type": "kedro_datasets.pandas.CSVDataset",
+                "filepath": csv_file,
+                "metadata": {"pandera": {"schema": test_schema}},
+            },
+            "factory.iris": {
                 "type": "MemoryDataset",
                 "metadata": {"pandera": {"schema": test_schema}},
-            }
-        },
-    )
+            },
+        }
+        test_catalog = DataCatalog.from_config(catalog_config)
+    else:
+        # Kedro 0.19 uses DataCatalog constructor with dataset_patterns
+        test_catalog = DataCatalog(
+            {
+                "iris": CSVDataset(
+                    filepath=csv_file,
+                    metadata={"pandera": {"schema": test_schema}},
+                ),
+            },
+            dataset_patterns={
+                "{foo}.iris": {
+                    "type": "MemoryDataset",
+                    "metadata": {"pandera": {"schema": test_schema}},
+                },
+            },
+        )
     return test_catalog
 
 
@@ -53,7 +76,6 @@ def _run_hook(csv_file, schema_file):
         catalog=test_catalog,
         inputs=test_inputs,
         is_async=False,
-        session_id=0,
     )
     return test_inputs, converted_inputs
 
@@ -88,7 +110,6 @@ def test_hook_unexpected_error():
             catalog=test_catalog,
             inputs=test_inputs,
             is_async=False,
-            session_id=0,
         )
 
 
@@ -142,14 +163,12 @@ def test_validate_only_once(caplog):
         catalog=test_catalog,
         inputs=test_inputs,
         is_async=False,
-        session_id=0,
     )
     test_hook.before_node_run(
         node=test_node,
         catalog=test_catalog,
         inputs=test_inputs,
         is_async=False,
-        session_id=0,
     )
     # should only be validated once
     assert caplog.text.count("successfully validated") == 1
@@ -162,8 +181,8 @@ def test_no_exception_on_memory_dataset_output():
     _register_hooks(test_hook_manager, HOOKS)
     test_catalog = DataCatalog(
         {
-            "Input": LambdaDataset(load=lambda: "data", save=lambda data: None),
-            "Output": LambdaDataset(load=lambda: "data", save=lambda data: None),
+            "Input": MemoryDataset("data"),
+            "Output": MemoryDataset(),
         }
     )
     test_pipeline = pipeline(
@@ -197,11 +216,10 @@ class TestPySparkDataframeLazyEvaluation:
     ) -> DataCatalog:
         return DataCatalog(
             {
-                "Input": LambdaDataset(
-                    load=lambda: spark_session.createDataFrame(
+                "Input": MemoryDataset(
+                    data=spark_session.createDataFrame(
                         pd.read_csv("tests/data/iris.csv")
                     ),
-                    save=lambda data: None,
                     metadata={
                         "pandera": {"schema": schema, "validate_kwargs": {"lazy": lazy}}
                     },
@@ -214,7 +232,7 @@ class TestPySparkDataframeLazyEvaluation:
             [node(func=lambda x: x, inputs="Input", outputs="Output", name="node1")]
         )
 
-    def run_pipeline(self, test_catalog: DataCatalog) -> Dict[str, Any]:
+    def run_pipeline(self, test_catalog: DataCatalog) -> dict[str, Any]:
         test_hook_manager = _create_hook_manager()
         test_hook = _get_test_hook()
         HOOKS = (test_hook,)
@@ -231,8 +249,9 @@ class TestPySparkDataframeLazyEvaluation:
         test_catalog = self.create_test_catalog(
             spark_session, self.IrisCorrectSchema, lazy=True
         )
-        data = self.run_pipeline(test_catalog)
-        assert len(data["Output"].pandera.errors) == 0
+        self.run_pipeline(test_catalog)
+        output_data = test_catalog.load("Output")
+        assert len(output_data.pandera.errors) == 0
 
     def test_spark_dataframe_wrong_schema_lazy_validation_raises_no_error(
         self, spark_session: SparkSession
@@ -240,8 +259,9 @@ class TestPySparkDataframeLazyEvaluation:
         test_catalog = self.create_test_catalog(
             spark_session, self.IrisWrongSchema, lazy=True
         )
-        data = self.run_pipeline(test_catalog)
-        assert len(data["Output"].pandera.errors) > 0
+        self.run_pipeline(test_catalog)
+        output_data = test_catalog.load("Output")
+        assert len(output_data.pandera.errors) > 0
 
     def test_spark_dataframe_wrong_schema_eager_validation_raises_error(
         self, spark_session: SparkSession
@@ -258,5 +278,6 @@ class TestPySparkDataframeLazyEvaluation:
         test_catalog = self.create_test_catalog(
             spark_session, self.IrisCorrectSchema, lazy=False
         )
-        data = self.run_pipeline(test_catalog)
-        assert len(data["Output"].pandera.errors) == 0
+        self.run_pipeline(test_catalog)
+        output_data = test_catalog.load("Output")
+        assert len(output_data.pandera.errors) == 0
