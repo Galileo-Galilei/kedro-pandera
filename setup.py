@@ -31,7 +31,7 @@ setup(
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/Galileo-Galilei/kedro-pandera",
-    python_requires=">=3.8",
+    python_requires=">=3.9",
     packages=find_packages(exclude=["docs*", "tests*"]),
     setup_requires=["setuptools_scm"],
     include_package_data=True,
@@ -56,7 +56,7 @@ setup(
             "pytest-mock",
             "pre-commit>=2.0.0,<4.0.0",
             "cookiecutter",
-            "kedro-datasets[pandas]",
+            "kedro-datasets[pandas-csvdataset]",
             "setuptools",  # remove from standard lib since Python 3.12
         ],
         "dev": [
@@ -77,7 +77,6 @@ setup(
     keywords="",
     classifiers=[
         "Development Status :: 4 - Beta",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
