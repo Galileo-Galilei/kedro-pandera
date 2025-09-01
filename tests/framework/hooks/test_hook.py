@@ -249,8 +249,9 @@ class TestPySparkDataframeLazyEvaluation:
         test_catalog = self.create_test_catalog(
             spark_session, self.IrisCorrectSchema, lazy=True
         )
-        data = self.run_pipeline(test_catalog)
-        assert len(data["Output"].pandera.errors) == 0
+        self.run_pipeline(test_catalog)
+        output_data = test_catalog.load("Output")
+        assert len(output_data.pandera.errors) == 0
 
     def test_spark_dataframe_wrong_schema_lazy_validation_raises_no_error(
         self, spark_session: SparkSession
@@ -258,8 +259,9 @@ class TestPySparkDataframeLazyEvaluation:
         test_catalog = self.create_test_catalog(
             spark_session, self.IrisWrongSchema, lazy=True
         )
-        data = self.run_pipeline(test_catalog)
-        assert len(data["Output"].pandera.errors) > 0
+        self.run_pipeline(test_catalog)
+        output_data = test_catalog.load("Output")
+        assert len(output_data.pandera.errors) > 0
 
     def test_spark_dataframe_wrong_schema_eager_validation_raises_error(
         self, spark_session: SparkSession
@@ -276,5 +278,6 @@ class TestPySparkDataframeLazyEvaluation:
         test_catalog = self.create_test_catalog(
             spark_session, self.IrisCorrectSchema, lazy=False
         )
-        data = self.run_pipeline(test_catalog)
-        assert len(data["Output"].pandera.errors) == 0
+        self.run_pipeline(test_catalog)
+        output_data = test_catalog.load("Output")
+        assert len(output_data.pandera.errors) == 0

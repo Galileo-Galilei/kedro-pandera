@@ -59,6 +59,7 @@ setup(
             "kedro-datasets[pandas-csvdataset]",
             "setuptools",  # remove from standard lib since Python 3.12
             "pyarrow",
+            "pandas>=2.0",
         ],
         "dev": [
             "pre-commit>=2.0.0,<4.0.0",
