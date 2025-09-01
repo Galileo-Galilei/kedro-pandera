@@ -50,7 +50,7 @@ setup(
         ],
         "test": [
             "ruff>=0.5.0, <0.6.0",
-            "pyspark>=2.2, <4.0",
+            "pyspark[connect]>=2.2, <4.0",
             "pytest>=7.0.0, <9.0.0",
             "pytest-cov>=4.0.0, <6.0.0",
             "pytest-mock",
